@@ -1,0 +1,41 @@
+.body {
+  display: block;
+  margin: auto;
+  width: 864px; /* may need to adjust this width, over time */
+}
+
+.main-col {
+  display:inline-block;
+  border: 1px solid black;
+  /*width: 400px;*/
+  width: 45%;
+  height: 500px;
+  overflow: auto;
+}
+
+.left-col {
+  float: left;
+}
+
+.right-col {
+  float: right;
+}
+
+.between-col {
+  display:inline-block;
+  border: 1px solid black;
+  /*width: 50px;*/
+  width: 8%;
+  height: 500px;
+}
+
+.move-btn {
+  width: 40px;
+  height: 40px;
+}
+
+.nav-sidebar {
+  width: 900px;
+  height: 50px;
+  border: 1px solid black;
+}

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html ng-app="dndApp">
+<head lang="en">
+  <meta charset="UTF-8">
+  <link rel="stylesheet" type="text/css" href="css/index.css">
+  <title>Base Page</title>
+</head>
+
+<body>
+
+  <div class="nav-sidebar">
+    <p>Nav links will eventually go up here</p>
+    <a href="/encounters">Encounters</a>
+  </div>
+
+  <div ng-view></div>
+
+  <script src="js/lib/angular.js"></script>
+  <script src="js/lib/angular-route.js"></script>
+  <script src="js/bin/app.js"></script>
+  <script src="js/bin/router.js"></script>
+
+
+  <script src="js/encounters.js"></script>
+</body>
+
+</html>
