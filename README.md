@@ -1,3 +1,7 @@
+# About
+
+This project based off of my nodejs boilerplate project. Will update the readme when the project begins to take off.
+
 # Nodejs Boilerplate
 
 This project was created from the desire to have a pre-built nodejs template that can be used to make any type of
