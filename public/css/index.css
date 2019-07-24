@@ -1,6 +1,5 @@
 .body {
   display: block;
-  margin: auto;
   width: 864px; /* may need to adjust this width, over time */
 }
 
@@ -36,6 +35,14 @@
 
 .nav-sidebar {
   width: 900px;
-  height: 50px;
+  height: 40px;
   border: 1px solid black;
+}
+
+.nav-text {
+  display: inline-block;
+  margin-left: 5px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  font-size: 18px;
 }

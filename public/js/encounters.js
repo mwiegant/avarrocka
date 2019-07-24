@@ -1,5 +1,5 @@
 dndApp.controller('EncountersController', ['$scope', function ($scope) {
 
-  $scope.testText = "hell from an angular controller!!";
+  $scope.testText = "hello from an angular controller!!";
 
 }]);
