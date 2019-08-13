@@ -4,7 +4,7 @@
 
 var unitsClient = {};
 
-unitsClient.loadUnits = function loadUnits(debug, cb) {
+unitsClient.loadUnits = function(debug, cb) {
   var xhttp = new XMLHttpRequest();
   var unitsInResponse = [];
   var units = [];
@@ -27,6 +27,18 @@ unitsClient.loadUnits = function loadUnits(debug, cb) {
   };
   xhttp.open("GET", "getAllAliveUnits", true);
   xhttp.send();
+};
+
+unitsClient.calculateSums = function(unit) {
+  let sums = {};
+
+  sums.att = unit.ATT + unit.MAN_ATT;
+  sums.pwr = unit.PWR + unit.MAN_PWR;
+  sums.mor = unit.MOR + unit.MAN_MOR;
+  sums.def = unit.DEF + unit.MAN_DEF;
+  sums.tgh = unit.TGH + unit.MAN_TGH;
+
+  return sums;
 };
 
 
