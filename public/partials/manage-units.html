@@ -83,7 +83,7 @@
             <th>Att:</th>
             <th><input ng-model="selectedUnit.ATT" readonly></th>
             <th>+</th>
-            <th><input type="number" ng-model="selectedUnit.MAN_ATT" ng-keyup="refresh()"></th>
+            <th><input type="number" ng-model="selectedUnit.MAN_ATT" ng-keyup="refreshSums()"></th>
             <th>=</th>
             <th><input ng-model="sumAtt" readonly></th>
           </tr>
@@ -91,7 +91,7 @@
             <th>Pwr:</th>
             <th><input ng-model="selectedUnit.PWR" readonly></th>
             <th>+</th>
-            <th><input type="number" ng-model="selectedUnit.MAN_PWR" ng-keyup="refresh()"></th>
+            <th><input type="number" ng-model="selectedUnit.MAN_PWR" ng-keyup="refreshSums()"></th>
             <th>=</th>
             <th><input ng-model="sumPwr" readonly></th>
           </tr>
@@ -99,7 +99,7 @@
             <th>Mor:</th>
             <th><input ng-model="selectedUnit.MOR" readonly></th>
             <th>+</th>
-            <th><input type="number" ng-model="selectedUnit.MAN_MOR" ng-keyup="refresh()"></th>
+            <th><input type="number" ng-model="selectedUnit.MAN_MOR" ng-keyup="refreshSums()"></th>
             <th>=</th>
             <th><input ng-model="sumMor" readonly></th>
           </tr>
@@ -107,7 +107,7 @@
             <th>Def:</th>
             <th><input ng-model="selectedUnit.DEF" readonly></th>
             <th>+</th>
-            <th><input type="number" ng-model="selectedUnit.MAN_DEF" ng-keyup="refresh()"></th>
+            <th><input type="number" ng-model="selectedUnit.MAN_DEF" ng-keyup="refreshSums()"></th>
             <th>=</th>
             <th><input ng-model="sumDef" readonly></th>
           </tr>
@@ -115,7 +115,7 @@
             <th>Tgh:</th>
             <th><input ng-model="selectedUnit.TGH" readonly></th>
             <th>+</th>
-            <th><input type="number" ng-model="selectedUnit.MAN_TGH" ng-keyup="refresh()"></th>
+            <th><input type="number" ng-model="selectedUnit.MAN_TGH" ng-keyup="refreshSums()"></th>
             <th>=</th>
             <th><input ng-model="sumTgh" readonly></th>
           </tr>
@@ -135,12 +135,14 @@
 
       <hr>
       <div class="upt-btns">
-        <button>save</button>
+        <button ng-click="saveUnit()">save</button>
+        <p class="upt-p" style="color: green; float: left;" ng-if="saveMessage != null && saveSuccessful === true">{{saveMessage}}</p>
+        <p class="upt-p" style="color: red; float: left;" ng-if="saveMessage != null && saveSuccessful === false">{{saveMessage}}</p>
       </div>
 
       <hr>
 
-      <div class="upt-log">
+      <div class="upt-p">
         <!-- add a log of unit activity -->
         <p>Someday, a log of unit activity will be displayed here!</p>
       </div>

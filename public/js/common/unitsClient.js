@@ -29,6 +29,34 @@ unitsClient.loadUnits = function(debug, cb) {
   xhttp.send();
 };
 
+unitsClient.saveUnit = function(_unit, isNewUnit, debug, cb) {
+  let xhttp = new XMLHttpRequest();
+  let unit = Object.assign({}, _unit);
+
+  delete unit.$$hashKey;
+
+  xhttp.onreadystatechange = function() {
+
+    if (this.readyState == 4 && this.status == 200) {
+
+      if (debug === true)
+        console.log(`Response from server: ${this.responseText}`);
+
+      response = JSON.parse(this.responseText);
+
+      cb(response);
+    }
+  };
+
+  if (isNewUnit)
+    xhttp.open("POST", "saveUnit", true);
+  else
+    xhttp.open("POST", "updateUnit", true);
+
+  xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+  xhttp.send(JSON.stringify(unit));
+};
+
 unitsClient.calculateSums = function(unit) {
   let sums = {};
 

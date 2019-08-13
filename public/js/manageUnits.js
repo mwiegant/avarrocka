@@ -2,6 +2,8 @@ dndApp.controller('ManageUnitsController', ['$scope', function ($scope) {
 
   $scope.availableUnits = [];
   $scope.selectedUnit = null;
+  $scope.saveSuccessful = null;
+  $scope.saveMessage = null;
   $scope.sumAtt = 0;
   $scope.sumPwr = 0;
   $scope.sumMor = 0;
@@ -18,10 +20,10 @@ dndApp.controller('ManageUnitsController', ['$scope', function ($scope) {
     $scope.sumDef = 0;
     $scope.sumTgh = 0;
 
-    $scope.refresh();
+    $scope.refreshSums();
   };
 
-  $scope.refresh = function() {
+  $scope.refreshSums = function() {
     const sums = unitsClient.calculateSums($scope.selectedUnit);
 
     $scope.sumAtt = sums.att;
@@ -29,6 +31,39 @@ dndApp.controller('ManageUnitsController', ['$scope', function ($scope) {
     $scope.sumMor = sums.mor;
     $scope.sumDef = sums.def;
     $scope.sumTgh = sums.tgh;
+  };
+
+  $scope.saveUnit = function() {
+    if ($scope.selectedUnit === null)
+      alert("Cannot save unit: there is no unit currently selected.");
+
+    // existing units will always have an id greater than 0
+    const isNewUnit = $scope.selectedUnit._id <= 0;
+    const passedValidation = true;
+
+
+    // TODO -- add validation here
+
+
+    if (passedValidation) {
+      if (isNewUnit)
+        $scope.selectedUnit._id = Date.now();
+
+      unitsClient.saveUnit($scope.selectedUnit, isNewUnit, false, function(response) {
+        $scope.saveSuccessful = response.success;
+
+        if (response.success === false) {
+          $scope.saveMessage = "Failed to save this unit!";
+        }
+        else {
+          $scope.saveMessage = "Successfully saved this unit!";
+        }
+
+        $scope.$apply();
+      });
+    }
+
+
   };
 
   var init = function() {
