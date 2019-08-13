@@ -1,9 +1,22 @@
 dndApp.controller('ManageUnitsController', ['$scope', function ($scope) {
 
-  console.log('loaded the manage units controller');
+  $scope.availableUnits = [];
+  $scope.selectedUnit = null;
+
+  $scope.selectUnit = function(unit) {
+    $scope.selectedUnit = unit;
+
+    // TODO - update fields in the unit-portrait, once that UI is built out
+
+  };
 
   var init = function() {
-    // TODO - any operations that should happen when this page is loaded
+
+    unitsClient.loadUnits(null, function(units) {
+      $scope.availableUnits = units;
+      $scope.$apply();
+    });
+
   };
 
   init();

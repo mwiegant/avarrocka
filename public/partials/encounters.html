@@ -4,13 +4,13 @@
 
     <div ng-repeat="unit in availableUnits">
       <div class="card">
-        <p>{{unit.name}}</p>
+        <i>{{unit.name}}</i>
         <p>{{unit.keywords}}</p>
         <hr>
         <div class="stats-box left">
-          <p>Attack: Roll + {{unit.attack}}</p>
-          <p>Power: Roll + {{unit.power}}</p>
-          <p>Morale: Roll + {{unit.morale}}</p>
+          <p>Attack: 1d20 + {{unit.attack}}</p>
+          <p>Power: 1d20 + {{unit.power}}</p>
+          <p>Morale: 1d20 + {{unit.morale}}</p>
         </div>
 
         <div class="stats-box right">

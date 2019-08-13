@@ -1,3 +1,175 @@
-<div>
-  <p>Manage Units</p>
+<div class="vfill">
+
+  <div class="main-col left-col">
+
+    <div ng-repeat="unit in availableUnits">
+      <div class="card" ng-click="selectUnit(unit)">
+        <i>{{unit.name}}</i>
+        <p>{{unit.keywords}}</p>
+        <hr>
+        <div class="stats-box left">
+          <p>Attack: 1d20 + {{unit.attack}}</p>
+          <p>Power: 1d20 + {{unit.power}}</p>
+          <p>Morale: 1d20 + {{unit.morale}}</p>
+        </div>
+
+        <div class="stats-box right">
+          <p>Defense: {{unit.defense}}</p>
+          <p>Toughness: {{unit.toughness}}</p>
+          <p>Strength: {{unit.size - unit.casulty}} / {{unit.size}}</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+  <div class="main-col right-col-manage">
+    <div ng-if="selectedUnit !== null" class="vfill">
+
+      <!-- VIEW (default) -->
+      <div nf-if="true === true" class="vfill">
+        <div class="vfill">
+          <div>
+            <input type="text" value="{{selectedUnit.name}}" placeholder="Unit name" class="upt-name" size="55">
+            <br>
+            <label class="upt-keywords">{{selectedUnit.keywords}}</label>
+          </div>
+
+          <div class="upt-stats">
+            <!-- dynamically add options:
+                https://memorynotfound.com/dynamically-add-remove-options-select-javascript/ -->
+            <div class="upt-desc">
+              <label>Race: </label>
+              <select>
+                <option value="Human">Human</option>
+                <option value="Orc">Orc</option>
+              </select>
+              <br>
+
+              <label>Exp: </label>
+              <select>
+                <option value="Green">Green</option>
+                <option value="Seasoned">Seasoned</option>
+              </select>
+              <br>
+
+              <label>Armor: </label>
+              <select>
+                <option value="Light">Light</option>
+                <option value="Medium">Medium</option>
+              </select>
+              <br>
+
+              <label>Type: </label>
+              <select>
+                <option value="Infantry">Infantry</option>
+                <option value="Archer">Archer</option>
+              </select>
+              <br>
+              <br>
+
+              <label>Troops: </label>
+              <input type="number" value="500" placeholder="1">
+            </div>
+
+
+            <table class="upt-table">
+              <tr>
+                <th></th>
+                <th>Auto</th>
+                <th></th>
+                <th>Manual</th>
+                <th></th>
+                <th>Final</th>
+              </tr>
+              <tr>
+                <th>Att:</th>
+                <th><input type="number" value="1" readonly></th>
+                <th>+</th>
+                <th><input type="number" value="0"></th>
+                <th>=</th>
+                <th><input type="number" value="1" readonly></th>
+              </tr>
+              <tr>
+                <th>Pwr:</th>
+                <th><input type="number" value="1" readonly></th>
+                <th>+</th>
+                <th><input type="number" value="0"></th>
+                <th>=</th>
+                <th><input type="number" value="1" readonly></th>
+              </tr>
+              <tr>
+                <th>Mor:</th>
+                <th><input type="number" value="1" readonly></th>
+                <th>+</th>
+                <th><input type="number" value="0"></th>
+                <th>=</th>
+                <th><input type="number" value="1" readonly></th>
+              </tr>
+              <tr>
+                <th>Def:</th>
+                <th><input type="number" value="1" readonly></th>
+                <th>+</th>
+                <th><input type="number" value="0"></th>
+                <th>=</th>
+                <th><input type="number" value="1" readonly></th>
+              </tr>
+              <tr>
+                <th>Tou:</th>
+                <th><input type="number" value="1" readonly></th>
+                <th>+</th>
+                <th><input type="number" value="0"></th>
+                <th>=</th>
+                <th><input type="number" value="1" readonly></th>
+              </tr>
+              <tr>
+                <th>Size:</th>
+                <th><input type="number" value="5"></th>
+                <th>/</th>
+                <th><input type="number" value="6" readonly></th>
+              </tr>
+            </table>
+          </div>
+
+          <div class="upt-notes">
+            <label>Notes:</label>
+            <input value="sample notes">
+          </div>
+
+          <hr>
+          <div class="upt-btns">
+            <button>edit</button>
+            <button>save</button>
+          </div>
+
+          <hr>
+
+          <div class="upt-log">
+            <!-- add a log of unit activity -->
+            <p>Someday, a log of unit activity will be displayed here!</p>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- EDIT -->
+      <div>
+
+
+
+
+      </div>
+
+
+
+
+
+    </div>
+
+    <div ng-if="selectedUnit === null">
+      <p>Select a unit to see its stats here</p>
+    </div>
+
+  </div>
 </div>
