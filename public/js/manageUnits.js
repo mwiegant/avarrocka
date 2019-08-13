@@ -57,6 +57,14 @@ dndApp.controller('ManageUnitsController', ['$scope', function ($scope) {
         }
         else {
           $scope.saveMessage = "Successfully saved this unit!";
+
+          // update the saved unit in the availableUnits list, so the unit's card will update
+          for (let i = 0; i < $scope.availableUnits.length; i++) {
+            if ($scope.availableUnits[i]._id === $scope.selectedUnit._id) {
+              $scope.availableUnits[i] = Object.assign({}, $scope.selectedUnit);
+              break;
+            }
+          }
         }
 
         $scope.$apply();
