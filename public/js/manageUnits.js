@@ -50,22 +50,15 @@ dndApp.controller('ManageUnitsController', ['$scope', function ($scope) {
 
   $scope.refreshKeywords = function() {
     // TODO - fix this code (for whatever reason, the selected options are not being updated in the model)
-    $timeout(function () {
-      console.log("refreshing keywords...");
 
-      let keywords = "";
+    let keywords = "";
 
-      keywords += $scope.selectedAncestry.key;
-      keywords += " " + $scope.selectedExperience.key;
-      keywords += " " + $scope.selectedEquipment.key;
-      keywords += " " + $scope.selectedUnitType.key;
+    keywords += $scope.selectedAncestry.key;
+    keywords += " " + $scope.selectedExperience.key;
+    keywords += " " + $scope.selectedEquipment.key;
+    keywords += " " + $scope.selectedUnitType.key;
 
-      $scope.selectedUnit.Keywords = keywords;
-    }, 1000);
-  };
-
-  $scope.clickEvent = function() {
-    console.log($scope.selectedCar);
+    $scope.selectedUnit.Keywords = keywords;
   };
 
   $scope.saveUnit = function() {
