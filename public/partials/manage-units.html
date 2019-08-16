@@ -36,31 +36,23 @@
         <!-- dynamically add options:
             https://memorynotfound.com/dynamically-add-remove-options-select-javascript/ -->
         <div class="upt-desc">
-          <label>Race: </label>
-          <select>
-            <option value="Human">Human</option>
-            <option value="Orc">Orc</option>
+          <label>Ancestry: </label>
+          <select ng-model="selectedAncestry" ng-options="x.key for x in ancestryOptions" ng-change="refreshKeywords()">
           </select>
           <br>
 
-          <label>Exp: </label>
-          <select>
-            <option value="Green">Green</option>
-            <option value="Seasoned">Seasoned</option>
+          <label>Experience: </label>
+          <select ng-model="selectedExperience" ng-options="x.key for x in experienceOptions" ng-change="refreshKeywords()">
           </select>
           <br>
 
-          <label>Armor: </label>
-          <select>
-            <option value="Light">Light</option>
-            <option value="Medium">Medium</option>
+          <label>Equipment: </label>
+          <select ng-model="selectedEquipment" ng-options="x.key for x in equipmentOptions" ng-change="refreshKeywords()">
           </select>
           <br>
 
-          <label>Type: </label>
-          <select>
-            <option value="Infantry">Infantry</option>
-            <option value="Archer">Archer</option>
+          <label>Unit Type: </label>
+          <select ng-model="selectedUnitType" ng-options="x.key for x in unitTypeOptions" ng-change="refreshKeywords()">
           </select>
           <br>
           <br>
