@@ -178,32 +178,7 @@ dndApp.controller('ManageUnitsController', ['$scope', function ($scope) {
         $scope.selectedUnitType = unitConstants.unitType[i];
       }
     }
-
-
-    unitConstants.ancestry.forEach(function (ancestry) {
-      if (ancestry.key == keywords[ANCESTRY]) {
-        $scope.selectedAncestry = ancestry;
-      }
-    });
-
-    unitConstants.experience.forEach(function (experience) {
-      if (experience.key == keywords[EXPERIENCE]) {
-        $scope.selectedExperience = experience;
-      }
-    });
-
-    unitConstants.equipment.forEach(function (equipment) {
-      if (equipment.key == keywords[EQUIPMENT]) {
-        $scope.selectedEquipment = equipment;
-      }
-    });
-
-    unitConstants.unitType.forEach(function (unitType) {
-      if (unitType.key == keywords[UNIT_TYPE]) {
-        $scope.selectedUnitType = unitType;
-      }
-    });
-  };
+  }
 
   function init() {
 

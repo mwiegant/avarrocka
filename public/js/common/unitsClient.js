@@ -29,6 +29,59 @@ unitsClient.loadUnits = function(debug, cb) {
   xhttp.send();
 };
 
+unitsClient.loadHostiles = function(debug, cb) {
+  var xhttp = new XMLHttpRequest();
+  var unitsInResponse = [];
+  var units = [];
+
+  xhttp.onreadystatechange = function() {
+
+    if (this.readyState == 4 && this.status == 200) {
+
+      if (debug === true)
+        console.log(`Response from server: ${this.responseText}`);
+
+      unitsInResponse = JSON.parse(this.responseText);
+
+      unitsInResponse.forEach(function(unit) {
+        units.push(unit);
+      });
+
+      cb(units);
+    }
+  };
+  xhttp.open("GET", "getAllAliveHostiles", true);
+  xhttp.send();
+};
+
+unitsClient.saveHostile = function(_hostile, isNewHostile, debug, cb) {
+  let xhttp = new XMLHttpRequest();
+  let hostile = Object.assign({}, _hostile);
+
+  delete hostile.$$hashKey;
+
+  xhttp.onreadystatechange = function() {
+
+    if (this.readyState == 4 && this.status == 200) {
+
+      if (debug === true)
+        console.log(`Response from server: ${this.responseText}`);
+
+      response = JSON.parse(this.responseText);
+
+      cb(response);
+    }
+  };
+
+  if (isNewHostile)
+    xhttp.open("POST", "saveHostile", true);
+  else
+    xhttp.open("POST", "updateHostile", true);
+
+  xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+  xhttp.send(JSON.stringify(hostile));
+};
+
 unitsClient.saveUnit = function(_unit, isNewUnit, debug, cb) {
   let xhttp = new XMLHttpRequest();
   let unit = Object.assign({}, _unit);

@@ -1,3 +1,154 @@
-<div>
-  <p>Manage Hostiles</p>
+<div class="main-col left-col">
+
+  <div ng-repeat="hostile in availableHostiles">
+    <div class="card" ng-click="selectHostile(hostile)">
+      <i>{{hostile.Name}}</i>
+      <p>{{hostile.Keywords}}</p>
+      <hr>
+      <div class="stats-box left">
+        <p>Attack: 1d20 + {{hostile.ATT + hostile.MAN_ATT}}</p>
+        <p>Power: 1d20 + {{hostile.PWR + hostile.MAN_PWR}}</p>
+        <p>Morale: 1d20 + {{hostile.MOR + hostile.MAN_MOR}}</p>
+      </div>
+
+      <div class="stats-box right">
+        <p>Defense: {{hostile.DEF + hostile.MAN_DEF}}</p>
+        <p>Toughness: {{hostile.TGH + hostile.MAN_TGH}}</p>
+        <p>Strength: {{hostile.STR}} / {{hostile.MAX_STR}}</p>
+      </div>
+    </div>
+  </div>
+
+  <button ng-click="createHostile()">Create new hostile</button>
+
+</div>
+
+
+<div class="main-col right-col-manage">
+  <div ng-if="selectedHostile !== null" class="vfill">
+
+    <div class="vfill">
+      <div>
+        <input type="text" ng-model="selectedHostile.Name" placeholder="Hostile unit name" class="upt-name" size="55">
+        <br>
+        <label class="upt-keywords">{{selectedHostile.Keywords}}</label>
+      </div>
+
+      <div class="upt-stats">
+        <!-- dynamically add options:
+            https://memorynotfound.com/dynamically-add-remove-options-select-javascript/ -->
+        <div class="upt-desc">
+          <label>Ancestry: </label>
+          <select ng-model="selectedAncestry" ng-options="x.key for x in ancestryOptions" ng-change="refreshKeywords()">
+          </select>
+          <br>
+
+          <label>Experience: </label>
+          <select ng-model="selectedExperience" ng-options="x.key for x in experienceOptions" ng-change="refreshKeywords()">
+          </select>
+          <br>
+
+          <label>Equipment: </label>
+          <select ng-model="selectedEquipment" ng-options="x.key for x in equipmentOptions" ng-change="refreshKeywords()">
+          </select>
+          <br>
+
+          <label>Unit Type: </label>
+          <select ng-model="selectedUnitType" ng-options="x.key for x in unitTypeOptions" ng-change="refreshKeywords()">
+          </select>
+          <br>
+          <br>
+
+          <label>Troops: </label>
+          <input type="number" value="500" placeholder="1">
+        </div>
+
+
+        <table class="upt-table">
+          <tr>
+            <th></th>
+            <th>Auto</th>
+            <th></th>
+            <th>Manual</th>
+            <th></th>
+            <th>Final</th>
+          </tr>
+          <tr>
+            <th>Att:</th>
+            <th><input ng-model="selectedHostile.ATT" readonly></th>
+            <th>+</th>
+            <th><input type="number" ng-model="selectedHostile.MAN_ATT" ng-keyup="refreshSums()"></th>
+            <th>=</th>
+            <th><input ng-model="sumAtt" readonly></th>
+          </tr>
+          <tr>
+            <th>Pwr:</th>
+            <th><input ng-model="selectedHostile.PWR" readonly></th>
+            <th>+</th>
+            <th><input type="number" ng-model="selectedHostile.MAN_PWR" ng-keyup="refreshSums()"></th>
+            <th>=</th>
+            <th><input ng-model="sumPwr" readonly></th>
+          </tr>
+          <tr>
+            <th>Mor:</th>
+            <th><input ng-model="selectedHostile.MOR" readonly></th>
+            <th>+</th>
+            <th><input type="number" ng-model="selectedHostile.MAN_MOR" ng-keyup="refreshSums()"></th>
+            <th>=</th>
+            <th><input ng-model="sumMor" readonly></th>
+          </tr>
+          <tr>
+            <th>Def:</th>
+            <th><input ng-model="selectedHostile.DEF" readonly></th>
+            <th>+</th>
+            <th><input type="number" ng-model="selectedHostile.MAN_DEF" ng-keyup="refreshSums()"></th>
+            <th>=</th>
+            <th><input ng-model="sumDef" readonly></th>
+          </tr>
+          <tr>
+            <th>Tgh:</th>
+            <th><input ng-model="selectedHostile.TGH" readonly></th>
+            <th>+</th>
+            <th><input type="number" ng-model="selectedHostile.MAN_TGH" ng-keyup="refreshSums()"></th>
+            <th>=</th>
+            <th><input ng-model="sumTgh" readonly></th>
+          </tr>
+          <tr>
+            <th>Size:</th>
+            <th><input ng-model="selectedHostile.STR"></th>
+            <th>/</th>
+            <th><input ng-model="selectedHostile.MAX_STR" readonly></th>
+          </tr>
+        </table>
+      </div>
+
+      <div class="upt-notes">
+        <label>Notes:</label>
+        <input value="sample notes">
+      </div>
+
+      <hr>
+      <div class="upt-btns">
+        <button ng-click="saveHostile()">save</button>
+        <p class="upt-p" style="color: green; float: left;" ng-if="saveMessage != null && saveSuccessful === true">{{saveMessage}}</p>
+        <p class="upt-p" style="color: red; float: left;" ng-if="saveMessage != null && saveSuccessful === false">{{saveMessage}}</p>
+      </div>
+
+      <hr>
+
+      <div class="upt-p">
+        <!-- add a log of hostile unit activity -->
+        <p>Someday, a log of hostile unit activity will be displayed here!</p>
+      </div>
+
+    </div>
+
+
+
+  </div>
+
+  <div ng-if="selectedHostile === null">
+    <p style="margin: 10px 0 0 10px;">Select a hostile unit to see its stats here.</p>
+  </div>
+
 </div>
