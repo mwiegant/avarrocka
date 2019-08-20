@@ -1,22 +1,23 @@
 <div class="main-col left-col">
 
   <div ng-repeat="unit in availableUnits">
-    <div class="card" ng-click="selectUnit(unit)">
-      <i>{{unit.Name}}</i>
-      <p>{{unit.Keywords}}</p>
-      <hr>
-      <div class="stats-box left">
-        <p>Attack: 1d20 + {{unit.ATT + unit.MAN_ATT}}</p>
-        <p>Power: 1d20 + {{unit.PWR + unit.MAN_PWR}}</p>
-        <p>Morale: 1d20 + {{unit.MOR + unit.MAN_MOR}}</p>
-      </div>
+    <div mw-unit ng-click="selectUnit(unit)"></div>
+<!--    <div class="card" ng-click="selectUnit(unit)">-->
+<!--      <i>{{unit.Name}}</i>-->
+<!--      <p>{{unit.Keywords}}</p>-->
+<!--      <hr>-->
+<!--      <div class="stats-box left">-->
+<!--        <p>Attack: 1d20 + {{unit.ATT + unit.MAN_ATT}}</p>-->
+<!--        <p>Power: 1d20 + {{unit.PWR + unit.MAN_PWR}}</p>-->
+<!--        <p>Morale: 1d20 + {{unit.MOR + unit.MAN_MOR}}</p>-->
+<!--      </div>-->
 
-      <div class="stats-box right">
-        <p>Defense: {{unit.DEF + unit.MAN_DEF}}</p>
-        <p>Toughness: {{unit.TGH + unit.MAN_TGH}}</p>
-        <p>Strength: {{unit.STR}} / {{unit.MAX_STR}}</p>
-      </div>
-    </div>
+<!--      <div class="stats-box right">-->
+<!--        <p>Defense: {{unit.DEF + unit.MAN_DEF}}</p>-->
+<!--        <p>Toughness: {{unit.TGH + unit.MAN_TGH}}</p>-->
+<!--        <p>Strength: {{unit.STR}} / {{unit.MAX_STR}}</p>-->
+<!--      </div>-->
+<!--    </div>-->
   </div>
 
   <button ng-click="createUnit()">Create new unit</button>
