@@ -1,3 +1,59 @@
-<div>
-  <p>Manage Encounters</p>
+<div class="main-col left-col-encounters">
+
+  <div ng-repeat="encounter in availableEncounters">
+    <div class="card" ng-click="selectEncounter(encounter)">
+      <i>{{encounter.Name}}</i>
+      <hr>
+      <div class="stats-box">
+        <p>Status: {{encounter.Status}}</p>
+        <p>Unit: {{encounter.SelectedHostiles[0]}}</p>
+      </div>
+    </div>
+  </div>
+
+<!--  TODO-->
+
+  <button ng-click="createEncounter()">Create new encounter</button>
+
+</div>
+
+
+<div class="main-col right-col-encounters">
+<!--  <div ng-if="selectedEncounter !== null" class="vfill">-->
+  <div ng-if="true === true" class="vfill">
+    <input type="text" ng-model="XXX" placeholder="Name of this Encounter" class="upt-name" size="55">
+
+    <div class="enpt-hostile">
+      <label>Select a hostile unit to fight for this encounter.</label>
+      <br>
+      <select ng-model="XXX" ng-options="x.value for x in y" ng-change="doSomething()">
+        <option value="">Select a hostile unit</option>
+      </select>
+    </div>
+
+    <div class="enpt-rewards">
+      <label>Enter rewards for winning this encounter.</label>
+      <br>
+      <textarea rows="5" cols="80" class="enpt-rewards-text"></textarea>
+    </div>
+
+    <hr>
+    <div class="upt-btns">
+      <button ng-click="saveEncounter()">save</button>
+      <p class="upt-p" style="color: green; float: left;" ng-if="saveMessage != null && saveSuccessful === true">{{saveMessage}}</p>
+      <p class="upt-p" style="color: red; float: left;" ng-if="saveMessage != null && saveSuccessful === false">{{saveMessage}}</p>
+    </div>
+
+    <hr>
+
+    <div class="upt-p">
+      <!-- add a log of encounter activity -->
+      <p>Someday, a log of encounter activity will be displayed here!</p>
+    </div>
+  </div>
+
+  <div ng-if="selectedEncounter === null">
+    <p style="margin: 10px 0 0 10px;">Select an encounter to see its information displayed here.</p>
+  </div>
+
 </div>

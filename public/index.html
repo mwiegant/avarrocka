@@ -2,9 +2,12 @@
 <html lang="en" ng-app="dndApp">
 <head>
   <meta charset="UTF-8">
-  <link rel="stylesheet" type="text/css" href="css/index.css">
+
   <link rel="stylesheet" type="text/css" href="css/cards.css">
-  <link rel="stylesheet" type="text/css" href="css/unit-portrait.css">
+  <link rel="stylesheet" type="text/css" href="css/encounter-cards.css">
+  <link rel="stylesheet" type="text/css" href="css/encounter-portraits.css">
+  <link rel="stylesheet" type="text/css" href="css/index.css">
+  <link rel="stylesheet" type="text/css" href="css/unit-portraits.css">
 
   <title>Encounters and Followers</title>
 </head>
@@ -23,20 +26,22 @@
 
   <div class="vfill" ng-view></div>
 
+  <!-- external library files MUST go first -->
   <script src="js/lib/angular.js"></script>
   <script src="js/lib/angular-route.js"></script>
 
   <script src="js/bin/app.js"></script>
   <script src="js/bin/router.js"></script>
 
+  <script src="js/common/encountersClient.js"></script>
   <script src="js/common/unitConstants.js"></script>
   <script src="js/common/unitsClient.js"></script>
 
   <!--  Must add all controller files here -->
   <script src="js/encounters.js"></script>
-  <script src="js/manageUnits.js"></script>
   <script src="js/manageEncounters.js"></script>
   <script src="js/manageHostiles.js"></script>
+  <script src="js/manageUnits.js"></script>
 </body>
 
 </html>
