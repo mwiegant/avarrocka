@@ -28,3 +28,31 @@ encountersClient.loadEncounters = function(debug, cb) {
   xhttp.open("GET", "getEncounters", true);
   xhttp.send();
 };
+
+encountersClient.saveEncounter = function(_encounter, isNewEncounter, debug, cb) {
+  let xhttp = new XMLHttpRequest();
+  let encounter = Object.assign({}, _encounter);
+
+  delete encounter.$$hashKey;
+
+  xhttp.onreadystatechange = function() {
+
+    if (this.readyState == 4 && this.status == 200) {
+
+      if (debug === true)
+        console.log(`Response from server: ${this.responseText}`);
+
+      let response = JSON.parse(this.responseText);
+
+      cb(response);
+    }
+  };
+
+  if (isNewEncounter)
+    xhttp.open("POST", "saveEncounter", true);
+  else
+    xhttp.open("POST", "updateEncounter", true);
+
+  xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+  xhttp.send(JSON.stringify(encounter));
+};

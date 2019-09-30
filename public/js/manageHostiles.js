@@ -23,6 +23,8 @@ dndApp.controller('ManageHostilesController', ['$scope', function ($scope) {
   $scope.sumTgh = 0;
 
   $scope.selectHostile = function(hostile) {
+    $scope.saveSuccessful = null;
+    $scope.saveMessage = null;
 
     // deep copy, so that un-saved changes will completely disappear when a new hostile unit is selected
     $scope.selectedHostile = Object.assign({}, hostile);

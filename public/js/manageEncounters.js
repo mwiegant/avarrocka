@@ -3,21 +3,15 @@ dndApp.controller('ManageEncountersController', ['$scope', function ($scope) {
   $scope.availableEncounters = [];
   $scope.availableUnits = [];
   $scope.selectedEncounter = null;
-  $scope.selectedHostileUnit = null;
   $scope.saveSuccessful = null;
   $scope.saveMessage = null;
 
   $scope.selectEncounter = function(encounter) {
+    $scope.saveSuccessful = null;
+    $scope.saveMessage = null;
 
     // deep copy, so that un-saved changes will completely disappear when a new unit is selected
     $scope.selectedEncounter = Object.assign({}, encounter);
-
-    // shallow copy, so changing the selected hostile unit will immediately persist onto the selected encounter
-    $scope.selectedHostileUnit = $scope.selectedEncounter.SelectedHostile;
-  };
-
-  $scope.selectHostileUnit = function(hostileUnit) {
-    $scope.selectedHostileUnit = hostileUnit;
   };
 
   $scope.createEncounter = function() {
@@ -29,9 +23,78 @@ dndApp.controller('ManageEncountersController', ['$scope', function ($scope) {
       Rewards : "",
       Deleted : false
     };
-
-    $scope.selectedHostileUnit = null;
   };
+
+  $scope.saveEncounter = function() {
+    if ($scope.selectedEncounter === null)
+      alert("Cannot save encounter: there is no encounter currently selected.");
+
+    // existing encounters will always have an id greater than 0
+    const isNewEncounter = $scope.selectedEncounter._id <= 0;
+
+    // during the save, the hostile unit object is overwritten (only the object's id is needed)
+    // for this reason, grab the selected hostile now, so the whole object can be retrieved after the save
+    let selectedHostile = $scope.selectedEncounter.SelectedHostile;
+
+    if (isValidEncounter()) {
+      if (isNewEncounter)
+        $scope.selectedEncounter._id = Date.now();
+
+      // be sure to save the id of the selected hostile
+      $scope.selectedEncounter.SelectedHostile = $scope.selectedEncounter.SelectedHostile._id;
+
+      encountersClient.saveEncounter($scope.selectedEncounter, isNewEncounter, false, function(response) {
+        $scope.selectedEncounter.SelectedHostile = selectedHostile;
+        $scope.saveSuccessful = response.success;
+
+        if (response.success === false) {
+          $scope.saveMessage = "Failed to save this encounter!";
+        }
+        else {
+          $scope.saveMessage = "Successfully saved this encounter!";
+
+          if (isNewEncounter) {
+            $scope.availableEncounters.push(Object.assign({}, $scope.selectedEncounter));
+          }
+          else {
+            // update the saved encounter in the availableEncounters list, so the encounter's card will update
+            for (let i = 0; i < $scope.availableEncounters.length; i++) {
+              if ($scope.availableEncounters[i]._id === $scope.selectedEncounter._id) {
+                $scope.availableEncounters[i] = Object.assign({}, $scope.selectedEncounter);
+                break;
+              }
+            }
+          }
+        }
+
+        $scope.$apply();
+      });
+    }
+  };
+
+  function isValidEncounter() {
+    let isValid = false;
+
+    // required: name, a selected unit, and rewards
+
+    if ($scope.selectedEncounter.Name === undefined || $scope.selectedEncounter.Name.length == 0) {
+      $scope.saveSuccessful = false;
+      $scope.saveMessage = "Error saving encounter: the encounter must have a name.";
+    }
+    else if($scope.selectedEncounter.SelectedHostile === undefined || $scope.selectedEncounter.SelectedHostile === null) {
+      $scope.saveSuccessful = false;
+      $scope.saveMessage = "Error saving encounter: please select a hostile unit for this encounter.";
+    }
+    else if($scope.selectedEncounter.Rewards === undefined || $scope.selectedEncounter.Rewards.length == 0) {
+      $scope.saveSuccessful = false;
+      $scope.saveMessage = "Error saving encounter: the encounter must specify some reward.";
+    }
+    else {
+      isValid = true;
+    }
+
+    return isValid;
+  }
 
   function init() {
 

@@ -30,28 +30,27 @@
     <div class="enpt-hostile">
       <label>Select a hostile unit to fight for this encounter.</label>
       <br>
-      <select ng-model="selectedHostileUnit"
-              ng-options="hostileUnit.Name for hostileUnit in availableUnits track by hostileUnit._id"
-              ng-change="selectHostileUnit()">
-        <option ng-if="selectedHostileUnit === null" ng-selected="selected" value="">Select a hostile unit</option>
+      <select ng-model="selectedEncounter.SelectedHostile"
+              ng-options="hostileUnit.Name for hostileUnit in availableUnits track by hostileUnit._id">
+        <option ng-if="selectedEncounter.SelectedHostile === null" ng-selected="selected" value="">Select a hostile unit</option>
       </select>
     </div>
 
     <!-- display hostile unit card information if a hostile unit is chosen -->
-    <div class="card" ng-if="selectedHostileUnit !== null">
-      <i>{{selectedHostileUnit.Name}}</i>
-      <p>{{selectedHostileUnit.Keywords}}</p>
+    <div class="card" ng-if="selectedEncounter.SelectedHostile !== null">
+      <i>{{selectedEncounter.SelectedHostile.Name}}</i>
+      <p>{{selectedEncounter.SelectedHostile.Keywords}}</p>
       <hr>
       <div class="stats-box left">
-        <p>Attack: 1d20 + {{selectedHostileUnit.ATT + selectedHostileUnit.MAN_ATT}}</p>
-        <p>Power: 1d20 + {{selectedHostileUnit.PWR + selectedHostileUnit.MAN_PWR}}</p>
-        <p>Morale: 1d20 + {{selectedHostileUnit.MOR + selectedHostileUnit.MAN_MOR}}</p>
+        <p>Attack: 1d20 + {{selectedEncounter.SelectedHostile.ATT + selectedEncounter.SelectedHostile.MAN_ATT}}</p>
+        <p>Power: 1d20 + {{selectedEncounter.SelectedHostile.PWR + selectedEncounter.SelectedHostile.MAN_PWR}}</p>
+        <p>Morale: 1d20 + {{selectedEncounter.SelectedHostile.MOR + selectedEncounter.SelectedHostile.MAN_MOR}}</p>
       </div>
 
       <div class="stats-box right">
-        <p>Defense: {{selectedHostileUnit.DEF + selectedHostileUnit.MAN_DEF}}</p>
-        <p>Toughness: {{selectedHostileUnit.TGH + selectedHostileUnit.MAN_TGH}}</p>
-        <p>Strength: {{selectedHostileUnit.STR}} / {{selectedHostileUnit.MAX_STR}}</p>
+        <p>Defense: {{selectedEncounter.SelectedHostile.DEF + selectedEncounter.SelectedHostile.MAN_DEF}}</p>
+        <p>Toughness: {{selectedEncounter.SelectedHostile.TGH + selectedEncounter.SelectedHostile.MAN_TGH}}</p>
+        <p>Strength: {{selectedEncounter.SelectedHostile.STR}} / {{selectedEncounter.SelectedHostile.MAX_STR}}</p>
       </div>
     </div>
     <div class="card" ng-if="selectedHostileUnit === null"></div>

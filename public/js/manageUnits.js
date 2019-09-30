@@ -23,6 +23,8 @@ dndApp.controller('ManageUnitsController', ['$scope', function ($scope) {
   $scope.sumTgh = 0;
 
   $scope.selectUnit = function(unit) {
+    $scope.saveSuccessful = null;
+    $scope.saveMessage = null;
 
     // deep copy, so that un-saved changes will completely disappear when a new unit is selected
     $scope.selectedUnit = Object.assign({}, unit);
