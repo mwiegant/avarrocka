@@ -6,35 +6,60 @@
       <hr>
       <div class="stats-box">
         <p>Status: {{encounter.Status}}</p>
-        <p>Unit: {{encounter.SelectedHostiles[0]}}</p>
+        <p>Unit: {{encounter.SelectedHostile.Name}}</p>
       </div>
     </div>
   </div>
 
-<!--  TODO-->
-
   <button ng-click="createEncounter()">Create new encounter</button>
-
 </div>
 
 
 <div class="main-col right-col-encounters">
-<!--  <div ng-if="selectedEncounter !== null" class="vfill">-->
-  <div ng-if="true === true" class="vfill">
-    <input type="text" ng-model="XXX" placeholder="Name of this Encounter" class="upt-name" size="55">
+  <div ng-if="selectedEncounter !== null" class="vfill">
+    <input type="text" ng-model="selectedEncounter.Name" placeholder="Name of this Encounter" class="upt-name" size="55">
+
+    <div class="enpt-hostile">
+      <label>Encounter Status: </label>
+      <select ng-model="selectedEncounter.Status">
+        <option value="Enabled">Enabled</option>
+        <option value="Disabled">Disabled</option>
+      </select>
+    </div>
 
     <div class="enpt-hostile">
       <label>Select a hostile unit to fight for this encounter.</label>
       <br>
-      <select ng-model="XXX" ng-options="x.value for x in y" ng-change="doSomething()">
-        <option value="">Select a hostile unit</option>
+      <select ng-model="selectedHostileUnit"
+              ng-options="hostileUnit.Name for hostileUnit in availableUnits track by hostileUnit._id"
+              ng-change="selectHostileUnit()">
+        <option ng-if="selectedHostileUnit === null" ng-selected="selected" value="">Select a hostile unit</option>
       </select>
     </div>
+
+    <!-- display hostile unit card information if a hostile unit is chosen -->
+    <div class="card" ng-if="selectedHostileUnit !== null">
+      <i>{{selectedHostileUnit.Name}}</i>
+      <p>{{selectedHostileUnit.Keywords}}</p>
+      <hr>
+      <div class="stats-box left">
+        <p>Attack: 1d20 + {{selectedHostileUnit.ATT + selectedHostileUnit.MAN_ATT}}</p>
+        <p>Power: 1d20 + {{selectedHostileUnit.PWR + selectedHostileUnit.MAN_PWR}}</p>
+        <p>Morale: 1d20 + {{selectedHostileUnit.MOR + selectedHostileUnit.MAN_MOR}}</p>
+      </div>
+
+      <div class="stats-box right">
+        <p>Defense: {{selectedHostileUnit.DEF + selectedHostileUnit.MAN_DEF}}</p>
+        <p>Toughness: {{selectedHostileUnit.TGH + selectedHostileUnit.MAN_TGH}}</p>
+        <p>Strength: {{selectedHostileUnit.STR}} / {{selectedHostileUnit.MAX_STR}}</p>
+      </div>
+    </div>
+    <div class="card" ng-if="selectedHostileUnit === null"></div>
 
     <div class="enpt-rewards">
       <label>Enter rewards for winning this encounter.</label>
       <br>
-      <textarea rows="5" cols="80" class="enpt-rewards-text"></textarea>
+      <textarea rows="5" cols="80" class="enpt-rewards-text" ng-model="selectedEncounter.Rewards"></textarea>
     </div>
 
     <hr>
