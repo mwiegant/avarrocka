@@ -27,8 +27,8 @@ dndApp.controller('ManageUnitsController', ['$scope', function ($scope) {
     $scope.selectedUnit = Object.assign({}, unit);
 
     // display keywords
-    $scope.selectedUnit.Keywords.Unsaved = $scope.selectedUnit.Keywords.Saved;
     loadSelectedKeywords($scope.selectedUnit.Keywords);
+    $scope.refreshKeywords();
 
     $scope.sumAtt = 0;
     $scope.sumPwr = 0;
@@ -93,9 +93,11 @@ dndApp.controller('ManageUnitsController', ['$scope', function ($scope) {
     $scope.sumMor = 0;
     $scope.sumDef = 0;
     $scope.sumTgh = 0;
+
+    loadSelectedKeywords($scope.selectedUnit.Keywords);
+    $scope.refreshKeywords();
   };
 
-  // TODO -- when saving unit, set selectedUnit.Keywords = selectedUnit.Keywords.Complete
   $scope.saveUnit = function() {
     if ($scope.selectedUnit === null)
       alert("Cannot save unit: there is no unit currently selected.");
@@ -168,7 +170,12 @@ dndApp.controller('ManageUnitsController', ['$scope', function ($scope) {
     const UNIT_TYPE = 3;
 
     // keywords should always have this order: Ancestry Experience Equipment UnitType
-    let splitKeywords = keywords.Unsaved.split(' ');
+    let splitKeywords = [];
+
+    if (keywords.Unsaved)
+      splitKeywords = keywords.Unsaved.split(' ');
+    else
+      splitKeywords = keywords.Saved.split(' ');
 
     if ($scope.ancestryOptions.includes(splitKeywords[ANCESTRY]))
       keywords.Ancestry = splitKeywords[ANCESTRY];
