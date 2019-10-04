@@ -40,21 +40,25 @@
         <div class="upt-desc">
           <label>Ancestry: </label>
           <select ng-model="selectedUnit.Keywords.Ancestry" ng-options="x for x in ancestryOptions" ng-change="refreshKeywords()">
+            <option ng-if="selectedUnit.Keywords.Ancestry === null" ng-selected="selected" value="">Select an ancestry</option>
           </select>
           <br>
 
           <label>Experience: </label>
           <select ng-model="selectedUnit.Keywords.Experience" ng-options="x for x in experienceOptions" ng-change="refreshKeywords()">
+            <option ng-if="selectedUnit.Keywords.Experience === null" ng-selected="selected" value="">Select an experience level</option>
           </select>
           <br>
 
           <label>Equipment: </label>
           <select ng-model="selectedUnit.Keywords.Equipment" ng-options="x for x in equipmentOptions" ng-change="refreshKeywords()">
+            <option ng-if="selectedUnit.Keywords.Equipment === null" ng-selected="selected" value="">Select an equipment type</option>
           </select>
           <br>
 
           <label>Unit Type: </label>
           <select ng-model="selectedUnit.Keywords.Type" ng-options="x for x in unitTypeOptions" ng-change="refreshKeywords()">
+            <option ng-if="selectedUnit.Keywords.Type === null" ng-selected="selected" value="">Select a unit type</option>
           </select>
           <br>
           <br>
