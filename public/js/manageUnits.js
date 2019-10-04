@@ -145,16 +145,29 @@ dndApp.controller('ManageUnitsController', ['$scope', function ($scope) {
   };
 
   function isValidPortrait() {
+    const keywords = $scope.selectedUnit.Keywords;
     let isValid = false;
 
     if ($scope.selectedUnit.Name === undefined || $scope.selectedUnit.Name.length == 0) {
       $scope.saveSuccessful = false;
       $scope.saveMessage = "Error saving unit: the unit must have a name.";
     }
-
-    // TODO -- add validation for keywords once that functionality is working
-    // else if () {}
-
+    else if (keywords.Ancestry === UNKNOWN || keywords.Ancestry === null) {
+      $scope.saveSuccessful = false;
+      $scope.saveMessage = "Error saving unit: please choose an ancestry for this unit.";
+    }
+    else if (keywords.Experience === UNKNOWN || keywords.Experience === null) {
+      $scope.saveSuccessful = false;
+      $scope.saveMessage = "Error saving unit: please choose an experience level for this unit.";
+    }
+    else if (keywords.Equipment === UNKNOWN || keywords.Equipment === null) {
+      $scope.saveSuccessful = false;
+      $scope.saveMessage = "Error saving unit: please choose an equipment type for this unit.";
+    }
+    else if (keywords.Type === UNKNOWN || keywords.Type === null) {
+      $scope.saveSuccessful = false;
+      $scope.saveMessage = "Error saving unit: please choose a unit type for this unit.";
+    }
     else {
       isValid = true;
     }
