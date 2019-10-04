@@ -3,7 +3,7 @@
   <div ng-repeat="unit in availableUnits">
     <div class="card" ng-click="selectUnit(unit)">
       <i>{{unit.Name}}</i>
-      <p>{{unit.Keywords}}</p>
+      <p>{{unit.Keywords.Saved}}</p>
       <hr>
       <div class="stats-box left">
         <p>Attack: 1d20 + {{unit.ATT + unit.MAN_ATT}}</p>
@@ -31,7 +31,7 @@
       <div>
         <input type="text" ng-model="selectedUnit.Name" placeholder="Unit name" class="upt-name" size="55">
         <br>
-        <label class="upt-keywords">{{selectedUnit.Keywords}}</label>
+        <label class="upt-keywords">{{selectedUnit.Keywords.Unsaved}}</label>
       </div>
 
       <div class="upt-stats">
@@ -39,22 +39,22 @@
             https://memorynotfound.com/dynamically-add-remove-options-select-javascript/ -->
         <div class="upt-desc">
           <label>Ancestry: </label>
-          <select ng-model="selectedAncestry" ng-options="x.key for x in ancestryOptions" ng-change="refreshKeywords()">
+          <select ng-model="selectedUnit.Keywords.Ancestry" ng-options="x for x in ancestryOptions" ng-change="refreshKeywords()">
           </select>
           <br>
 
           <label>Experience: </label>
-          <select ng-model="selectedExperience" ng-options="x.key for x in experienceOptions" ng-change="refreshKeywords()">
+          <select ng-model="selectedUnit.Keywords.Experience" ng-options="x for x in experienceOptions" ng-change="refreshKeywords()">
           </select>
           <br>
 
           <label>Equipment: </label>
-          <select ng-model="selectedEquipment" ng-options="x.key for x in equipmentOptions" ng-change="refreshKeywords()">
+          <select ng-model="selectedUnit.Keywords.Equipment" ng-options="x for x in equipmentOptions" ng-change="refreshKeywords()">
           </select>
           <br>
 
           <label>Unit Type: </label>
-          <select ng-model="selectedUnitType" ng-options="x.key for x in unitTypeOptions" ng-change="refreshKeywords()">
+          <select ng-model="selectedUnit.Keywords.Type" ng-options="x for x in unitTypeOptions" ng-change="refreshKeywords()">
           </select>
           <br>
           <br>
