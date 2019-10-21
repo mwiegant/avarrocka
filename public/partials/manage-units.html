@@ -138,6 +138,7 @@
 
       <hr>
       <div class="upt-btns">
+        <button ng-click="killUnit()">kill this unit</button>
         <button ng-click="saveUnit()">save</button>
         <p class="upt-p" style="color: green; float: left;" ng-if="saveMessage != null && saveSuccessful === true">{{saveMessage}}</p>
         <p class="upt-p" style="color: red; float: left;" ng-if="saveMessage != null && saveSuccessful === false">{{saveMessage}}</p>

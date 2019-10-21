@@ -118,6 +118,31 @@ dndApp.controller('ManageUnitsController', ['$scope', function ($scope) {
     }
   };
 
+  $scope.killUnit = function() {
+    if (confirm("Are you sure you want to kill this unit?")) {
+
+      // existing units will always have an id greater than 0
+      const isNewUnit = $scope.selectedUnit._id <= 0;
+
+      if (isNewUnit) {
+        $scope.selectedUnit = null;
+      }
+      else {
+        $scope.selectedUnit.Alive = false;
+
+        if (partyUnitsLoaded) {
+          unitsClient.saveUnit($scope.selectedUnit, isNewUnit, false, function(response) {
+            $scope.loadPartyUnits();
+          });
+        } else {
+          unitsClient.saveHostile($scope.selectedUnit, isNewUnit, false, function(response) {
+            $scope.loadHostileUnits();
+          });
+        }
+      }
+    }
+  };
+
   // loads the party's units as the 'available units'
   $scope.loadPartyUnits = function() {
     partyUnitsLoaded = true;
