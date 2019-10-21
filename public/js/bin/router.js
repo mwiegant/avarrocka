@@ -13,10 +13,6 @@ dndApp.config(['$routeProvider',
           templateUrl: 'partials/manage-encounters.html',
           controller: 'ManageEncountersController'
         })
-        .when('/manage-hostiles', {
-          templateUrl: 'partials/manage-hostiles.html',
-          controller: 'ManageHostilesController'
-        })
         .when('/', {})
         .otherwise({
           redirectTo: 'partials/error.html',

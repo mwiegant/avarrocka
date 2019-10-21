@@ -1,6 +1,7 @@
 dndApp.controller('ManageUnitsController', ['$scope', function ($scope) {
 
   const UNKNOWN = "?";
+  var partyUnitsLoaded = null;
 
   $scope.availableUnits = [];
   $scope.selectedUnit = null;
@@ -88,6 +89,7 @@ dndApp.controller('ManageUnitsController', ['$scope', function ($scope) {
     $scope.refreshKeywords();
   };
 
+  // saves the currently selected unit, using the boolean partyUnitsLoaded to determine which backend endpoint to call
   $scope.saveUnit = function() {
     if ($scope.selectedUnit === null)
       alert("Cannot save unit: there is no unit currently selected.");
@@ -103,35 +105,35 @@ dndApp.controller('ManageUnitsController', ['$scope', function ($scope) {
       // prior to saving, must set the keywords to be a string, not an object
       $scope.selectedUnit.Keywords = keywordsObject.Unsaved;
 
-      unitsClient.saveUnit($scope.selectedUnit, isNewUnit, false, function(response) {
-        $scope.selectedUnit.Keywords = keywordsObject;
-        $scope.saveSuccessful = response.success;
+      if (partyUnitsLoaded) {
+        unitsClient.saveUnit($scope.selectedUnit, isNewUnit, false, function(response) {
+          _saveUnitCallback(response, keywordsObject, isNewUnit);
+        });
+      } else {
+        unitsClient.saveHostile($scope.selectedUnit, isNewUnit, false, function(response) {
+          _saveUnitCallback(response, keywordsObject, isNewUnit);
+        });
+      }
 
-        $scope.selectedUnit.Keywords.Saved = $scope.selectedUnit.Keywords.Unsaved;
-
-        if (response.success === false) {
-          $scope.saveMessage = "Failed to save this unit!";
-        }
-        else {
-          $scope.saveMessage = "Successfully saved this unit!";
-
-          if (isNewUnit) {
-            $scope.availableUnits.push(Object.assign({}, $scope.selectedUnit));
-          }
-          else {
-            // update the saved unit in the availableUnits list, so the unit's card will update
-            for (let i = 0; i < $scope.availableUnits.length; i++) {
-              if ($scope.availableUnits[i]._id === $scope.selectedUnit._id) {
-                $scope.availableUnits[i] = Object.assign({}, $scope.selectedUnit);
-                break;
-              }
-            }
-          }
-        }
-
-        $scope.$apply();
-      });
     }
+  };
+
+  // loads the party's units as the 'available units'
+  $scope.loadPartyUnits = function() {
+    partyUnitsLoaded = true;
+
+    unitsClient.loadUnits(null, function(units) {
+      _loadUnitsCallback(units);
+    });
+  };
+
+  // loads the DM's hostile units as the 'available units'
+  $scope.loadHostileUnits = function() {
+    partyUnitsLoaded = false;
+
+    unitsClient.loadHostiles(null, function(units) {
+      _loadUnitsCallback(units);
+    });
   };
 
   function isValidPortrait() {
@@ -164,7 +166,6 @@ dndApp.controller('ManageUnitsController', ['$scope', function ($scope) {
 
     return isValid;
   }
-
 
   function loadSelectedKeywords(keywords) {
     const ANCESTRY = 0;
@@ -201,26 +202,59 @@ dndApp.controller('ManageUnitsController', ['$scope', function ($scope) {
       keywords.Type = UNKNOWN;
   }
 
+  function _saveUnitCallback(response, keywordsObject, isNewUnit) {
+    $scope.selectedUnit.Keywords = keywordsObject;
+    $scope.saveSuccessful = response.success;
+
+    $scope.selectedUnit.Keywords.Saved = $scope.selectedUnit.Keywords.Unsaved;
+
+    if (response.success === false) {
+      $scope.saveMessage = "Failed to save this unit!";
+    }
+    else {
+      $scope.saveMessage = "Successfully saved this unit!";
+
+      if (isNewUnit) {
+        $scope.availableUnits.push(Object.assign({}, $scope.selectedUnit));
+      }
+      else {
+        // update the saved unit in the availableUnits list, so the unit's card will update
+        for (let i = 0; i < $scope.availableUnits.length; i++) {
+          if ($scope.availableUnits[i]._id === $scope.selectedUnit._id) {
+            $scope.availableUnits[i] = Object.assign({}, $scope.selectedUnit);
+            break;
+          }
+        }
+      }
+    }
+
+    $scope.$apply();
+  }
+
+  function _loadUnitsCallback(units) {
+    $scope.availableUnits = [];
+    $scope.selectedUnit = null;
+
+    units.forEach(function(unit) {
+      // prior to adding each unit to the page, must set the keywords to be an object, not a string
+      unit.Keywords = {
+        Saved: unit.Keywords
+      };
+
+      $scope.availableUnits.push(unit);
+    });
+
+    $scope.$apply();
+  }
+
+
+
   function init() {
     // load constants into the scope, so drop-downs will be populated
     $scope.ancestryOptions = Object.keys(unitConstants.ancestry);
     $scope.experienceOptions = Object.keys(unitConstants.experience);
     $scope.equipmentOptions = Object.keys(unitConstants.equipment);
     $scope.unitTypeOptions = Object.keys(unitConstants.unitType);
-
-    unitsClient.loadUnits(null, function(units) {
-
-      units.forEach(function(unit) {
-        // prior to adding each unit to the page, must set the keywords to be an object, not a string
-        unit.Keywords = {
-          Saved: unit.Keywords
-        };
-
-        $scope.availableUnits.push(unit);
-      });
-
-      $scope.$apply();
-    });
   }
 
   init();

@@ -1,5 +1,10 @@
 <div class="main-col left-col">
 
+  <div class="units-selector-box">
+    <button class="units-selector-units" ng-click="loadPartyUnits()">Load Player Party Units</button>
+    <button class="units-selector-hostiles" ng-click="loadHostileUnits()">Load Hostile Units</button>
+  </div>
+
   <div ng-repeat="unit in availableUnits">
     <div class="card" ng-click="selectUnit(unit)">
       <i>{{unit.Name}}</i>
