@@ -13,11 +13,7 @@ dndApp.controller('ManageUnitsController', ['$scope', function ($scope) {
   $scope.unitTypeOptions = [];
   $scope.size = null; // unsure if I need this...will keep for now
 
-  $scope.sumAtt = 0;
-  $scope.sumPwr = 0;
-  $scope.sumMor = 0;
-  $scope.sumDef = 0;
-  $scope.sumTgh = 0;
+  $scope.finalSums = [];
 
   $scope.selectUnit = function(unit) {
     $scope.saveSuccessful = null;
@@ -26,27 +22,24 @@ dndApp.controller('ManageUnitsController', ['$scope', function ($scope) {
     // deep copy, so that un-saved changes will completely disappear when a new unit is selected
     $scope.selectedUnit = Object.assign({}, unit);
 
-    // display keywords
+    // display keywords & refresh the keywords / sums
     loadSelectedKeywords($scope.selectedUnit.Keywords);
     $scope.refreshKeywords();
-
-    $scope.sumAtt = 0;
-    $scope.sumPwr = 0;
-    $scope.sumMor = 0;
-    $scope.sumDef = 0;
-    $scope.sumTgh = 0;
-
-    $scope.refreshSums();
   };
 
   $scope.refreshSums = function() {
-    const sums = unitsClient.calculateSums($scope.selectedUnit);
+    // adjust the auto value sums
+    let keywordAutoSums = unitsClient.calculateAutoSums($scope.selectedUnit);
 
-    $scope.sumAtt = sums.att;
-    $scope.sumPwr = sums.pwr;
-    $scope.sumMor = sums.mor;
-    $scope.sumDef = sums.def;
-    $scope.sumTgh = sums.tgh;
+    // store the auto value sums in the selected unit, so that the auto values will immediately be saveable
+    $scope.selectedUnit.AUTO_ATT = keywordAutoSums[0];
+    $scope.selectedUnit.AUTO_PWR = keywordAutoSums[1];
+    $scope.selectedUnit.AUTO_MOR = keywordAutoSums[2];
+    $scope.selectedUnit.AUTO_DEF = keywordAutoSums[3];
+    $scope.selectedUnit.AUTO_TGH = keywordAutoSums[4];
+
+    // adjust the final sums
+    $scope.finalSums = unitsClient.calculateSums($scope.selectedUnit, keywordAutoSums);
   };
 
   $scope.refreshKeywords = function() {
@@ -59,6 +52,9 @@ dndApp.controller('ManageUnitsController', ['$scope', function ($scope) {
     keywordsComplete += " " + (keywords.Type || UNKNOWN);
 
     $scope.selectedUnit.Keywords.Unsaved = keywordsComplete;
+
+    // if the keywords are refreshed, will need to refresh the sums too
+    $scope.refreshSums();
   };
 
   $scope.createUnit = function() {
@@ -73,11 +69,11 @@ dndApp.controller('ManageUnitsController', ['$scope', function ($scope) {
           Equipment: null,
           Type: null
         },
-        ATT : 0,
-        DEF : 0,
-        PWR : 0,
-        TGH : 0,
-        MOR : 0,
+        AUTO_ATT : 0,
+        AUTO_DEF : 0,
+        AUTO_PWR : 0,
+        AUTO_TGH : 0,
+        AUTO_MOR : 0,
         MAX_STR : 4,
         STR : 4,
         MAN_ATT : 0,
@@ -87,12 +83,6 @@ dndApp.controller('ManageUnitsController', ['$scope', function ($scope) {
         MAN_MOR : 0,
         Alive: true
     };
-
-    $scope.sumAtt = 0;
-    $scope.sumPwr = 0;
-    $scope.sumMor = 0;
-    $scope.sumDef = 0;
-    $scope.sumTgh = 0;
 
     loadSelectedKeywords($scope.selectedUnit.Keywords);
     $scope.refreshKeywords();
@@ -172,9 +162,9 @@ dndApp.controller('ManageUnitsController', ['$scope', function ($scope) {
       isValid = true;
     }
 
-
     return isValid;
   }
+
 
   function loadSelectedKeywords(keywords) {
     const ANCESTRY = 0;
@@ -209,30 +199,6 @@ dndApp.controller('ManageUnitsController', ['$scope', function ($scope) {
       keywords.Type = splitKeywords[UNIT_TYPE];
     else
       keywords.Type = UNKNOWN;
-
-    // for (let i = 0; i < unitConstants.ancestry.length; i++) {
-    //   if (unitConstants.ancestry[i].key == splitKeywords[ANCESTRY]) {
-    //     keywords.Ancestry = unitConstants.ancestry[i].key;
-    //   }
-    // }
-
-    // for (let i = 0; i < unitConstants.experience.length; i++) {
-    //   if (unitConstants.experience[i].key == splitKeywords[EXPERIENCE]) {
-    //     keywords.Experience = unitConstants.experience[i].key;
-    //   }
-    // }
-    //
-    // for (let i = 0; i < unitConstants.equipment.length; i++) {
-    //   if (unitConstants.equipment[i].key == splitKeywords[EQUIPMENT]) {
-    //     keywords.Equipment = unitConstants.equipment[i].key;
-    //   }
-    // }
-    //
-    // for (let i = 0; i < unitConstants.unitType.length; i++) {
-    //   if (unitConstants.unitType[i].key == splitKeywords[UNIT_TYPE]) {
-    //     keywords.Type = unitConstants.unitType[i].key;
-    //   }
-    // }
   }
 
   function init() {

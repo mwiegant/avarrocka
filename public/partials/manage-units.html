@@ -6,15 +6,15 @@
       <p>{{unit.Keywords.Saved}}</p>
       <hr>
       <div class="stats-box left">
-        <p>Attack: 1d20 + {{unit.ATT + unit.MAN_ATT}}</p>
-        <p>Power: 1d20 + {{unit.PWR + unit.MAN_PWR}}</p>
-        <p>Morale: 1d20 + {{unit.MOR + unit.MAN_MOR}}</p>
+        <p>Attack: 1d20 + {{unit.AUTO_ATT + unit.MAN_ATT}}</p>
+        <p>Power: 1d20 + {{unit.AUTO_PWR + unit.MAN_PWR}}</p>
+        <p>Morale: 1d20 + {{unit.AUTO_MOR + unit.MAN_MOR}}</p>
       </div>
 
       <div class="stats-box right">
-        <p>Defense: {{unit.DEF + unit.MAN_DEF}}</p>
-        <p>Toughness: {{unit.TGH + unit.MAN_TGH}}</p>
-        <p>Strength: {{unit.STR}} / {{unit.MAX_STR}}</p>
+        <p>Defense: {{unit.AUTO_DEF + unit.MAN_DEF}}</p>
+        <p>Toughness: {{unit.AUTO_TGH + unit.MAN_TGH}}</p>
+        <p>Strength: {{unit.AUTO_STR}} / {{unit.MAX_STR}}</p>
       </div>
     </div>
   </div>
@@ -79,43 +79,43 @@
           </tr>
           <tr>
             <th>Att:</th>
-            <th><input ng-model="selectedUnit.ATT" readonly></th>
+            <th><input ng-model="selectedUnit.AUTO_ATT" readonly></th>
             <th>+</th>
             <th><input type="number" ng-model="selectedUnit.MAN_ATT" ng-keyup="refreshSums()"></th>
             <th>=</th>
-            <th><input ng-model="sumAtt" readonly></th>
+            <th><input ng-model="finalSums[0]" readonly></th>
           </tr>
           <tr>
             <th>Pwr:</th>
-            <th><input ng-model="selectedUnit.PWR" readonly></th>
+            <th><input ng-model="selectedUnit.AUTO_PWR" readonly></th>
             <th>+</th>
             <th><input type="number" ng-model="selectedUnit.MAN_PWR" ng-keyup="refreshSums()"></th>
             <th>=</th>
-            <th><input ng-model="sumPwr" readonly></th>
+            <th><input ng-model="finalSums[1]" readonly></th>
           </tr>
           <tr>
             <th>Mor:</th>
-            <th><input ng-model="selectedUnit.MOR" readonly></th>
+            <th><input ng-model="selectedUnit.AUTO_MOR" readonly></th>
             <th>+</th>
             <th><input type="number" ng-model="selectedUnit.MAN_MOR" ng-keyup="refreshSums()"></th>
             <th>=</th>
-            <th><input ng-model="sumMor" readonly></th>
+            <th><input ng-model="finalSums[2]" readonly></th>
           </tr>
           <tr>
             <th>Def:</th>
-            <th><input ng-model="selectedUnit.DEF" readonly></th>
+            <th><input ng-model="selectedUnit.AUTO_DEF" readonly></th>
             <th>+</th>
             <th><input type="number" ng-model="selectedUnit.MAN_DEF" ng-keyup="refreshSums()"></th>
             <th>=</th>
-            <th><input ng-model="sumDef" readonly></th>
+            <th><input ng-model="finalSums[3]" readonly></th>
           </tr>
           <tr>
             <th>Tgh:</th>
-            <th><input ng-model="selectedUnit.TGH" readonly></th>
+            <th><input ng-model="selectedUnit.AUTO_TGH" readonly></th>
             <th>+</th>
             <th><input type="number" ng-model="selectedUnit.MAN_TGH" ng-keyup="refreshSums()"></th>
             <th>=</th>
-            <th><input ng-model="sumTgh" readonly></th>
+            <th><input ng-model="finalSums[4]" readonly></th>
           </tr>
           <tr>
             <th>Size:</th>

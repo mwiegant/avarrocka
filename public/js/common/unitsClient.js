@@ -135,14 +135,38 @@ unitsClient.saveUnit = function(_unit, isNewUnit, debug, cb) {
   xhttp.send(JSON.stringify(unit));
 };
 
-unitsClient.calculateSums = function(unit) {
-  let sums = {};
+/*
+  Given a unit with keywords, returns the sums of the Auto values.
+ */
+unitsClient.calculateAutoSums = function(unit) {
+  const empty = [0, 0, 0, 0, 0];
+  const keywords = unit.Keywords;
+  const ancestryValues = unitConstants.ancestry[keywords.Ancestry] || empty;
+  const experienceValues = unitConstants.experience[keywords.Experience] || empty;
+  const equipmentValues = unitConstants.equipment[keywords.Equipment] || empty;
+  const unitTypeValues = unitConstants.unitType[keywords.Type] || empty;
 
-  sums.att = unit.ATT + unit.MAN_ATT;
-  sums.pwr = unit.PWR + unit.MAN_PWR;
-  sums.mor = unit.MOR + unit.MAN_MOR;
-  sums.def = unit.DEF + unit.MAN_DEF;
-  sums.tgh = unit.TGH + unit.MAN_TGH;
+  let autoSums = [0, 0, 0, 0, 0];
+
+  // refresh auto values
+  for (let i = 0; i < 5; i++) {
+    autoSums[i] += ancestryValues[i] + experienceValues[i] + equipmentValues[i] + unitTypeValues[i];
+  }
+
+  return autoSums;
+};
+
+/*
+  Given a unit and the sums of the Auto values, returns the sums of the final values (Auto & Manual values added)
+ */
+unitsClient.calculateSums = function(unit, keywordAutoSums) {
+  let sums = [0, 0, 0, 0, 0];
+
+  sums[0] = keywordAutoSums[0] + unit.MAN_ATT;
+  sums[1] = keywordAutoSums[1] + unit.MAN_PWR;
+  sums[2] = keywordAutoSums[2] + unit.MAN_MOR;
+  sums[3] = keywordAutoSums[3] + unit.MAN_DEF;
+  sums[4] = keywordAutoSums[4] + unit.MAN_TGH;
 
   return sums;
 };
