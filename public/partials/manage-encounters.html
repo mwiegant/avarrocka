@@ -63,9 +63,11 @@
 
     <hr>
     <div class="upt-btns">
-      <button ng-click="saveEncounter()">save</button>
       <p class="upt-p" style="color: green; float: left;" ng-if="saveMessage != null && saveSuccessful === true">{{saveMessage}}</p>
       <p class="upt-p" style="color: red; float: left;" ng-if="saveMessage != null && saveSuccessful === false">{{saveMessage}}</p>
+      <br>
+      <button ng-click="deleteEncounter()">remove this encounter</button>
+      <button ng-click="saveEncounter()">save</button>
     </div>
 
     <hr>

@@ -72,6 +72,29 @@ dndApp.controller('ManageEncountersController', ['$scope', function ($scope) {
     }
   };
 
+  $scope.deleteEncounter = function() {
+    if (confirm("Are you sure you want to delete this encounter?")) {
+
+      // existing encounters will always have an id greater than 0
+      const isNewEncounter = $scope.selectedEncounter._id <= 0;
+
+      if (isNewEncounter) {
+        $scope.selectedEncounter = null;
+      }
+      else {
+        $scope.selectedEncounter.Deleted = true;
+
+        // be sure to save the id of the selected hostile
+        $scope.selectedEncounter.SelectedHostile = $scope.selectedEncounter.SelectedHostile._id;
+
+        encountersClient.saveEncounter($scope.selectedEncounter, isNewEncounter, false, function(response) {
+          $scope.selectedEncounter = null;
+          loadEncounters();
+        });
+      }
+    }
+  };
+
   function isValidEncounter() {
     let isValid = false;
 
@@ -96,8 +119,7 @@ dndApp.controller('ManageEncountersController', ['$scope', function ($scope) {
     return isValid;
   }
 
-  function init() {
-
+  function loadEncounters() {
     encountersClient.loadEncounters(null, function(encounters) {
       $scope.availableEncounters = encounters;
 
@@ -118,6 +140,10 @@ dndApp.controller('ManageEncountersController', ['$scope', function ($scope) {
 
       $scope.$apply();
     });
+  }
+
+  function init() {
+    loadEncounters();
   }
 
   init();

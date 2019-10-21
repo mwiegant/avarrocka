@@ -1,7 +1,7 @@
 dndApp.controller('ManageUnitsController', ['$scope', function ($scope) {
 
   const UNKNOWN = "?";
-  var partyUnitsLoaded = null;
+  $scope.partyUnitsLoaded = null;
 
   $scope.availableUnits = [];
   $scope.selectedUnit = null;
@@ -105,7 +105,7 @@ dndApp.controller('ManageUnitsController', ['$scope', function ($scope) {
       // prior to saving, must set the keywords to be a string, not an object
       $scope.selectedUnit.Keywords = keywordsObject.Unsaved;
 
-      if (partyUnitsLoaded) {
+      if ($scope.partyUnitsLoaded) {
         unitsClient.saveUnit($scope.selectedUnit, isNewUnit, false, function(response) {
           _saveUnitCallback(response, keywordsObject, isNewUnit);
         });
@@ -130,7 +130,7 @@ dndApp.controller('ManageUnitsController', ['$scope', function ($scope) {
       else {
         $scope.selectedUnit.Alive = false;
 
-        if (partyUnitsLoaded) {
+        if ($scope.partyUnitsLoaded) {
           unitsClient.saveUnit($scope.selectedUnit, isNewUnit, false, function(response) {
             $scope.loadPartyUnits();
           });
@@ -145,7 +145,7 @@ dndApp.controller('ManageUnitsController', ['$scope', function ($scope) {
 
   // loads the party's units as the 'available units'
   $scope.loadPartyUnits = function() {
-    partyUnitsLoaded = true;
+    $scope.partyUnitsLoaded = true;
 
     unitsClient.loadUnits(null, function(units) {
       _loadUnitsCallback(units);
@@ -154,7 +154,7 @@ dndApp.controller('ManageUnitsController', ['$scope', function ($scope) {
 
   // loads the DM's hostile units as the 'available units'
   $scope.loadHostileUnits = function() {
-    partyUnitsLoaded = false;
+    $scope.partyUnitsLoaded = false;
 
     unitsClient.loadHostiles(null, function(units) {
       _loadUnitsCallback(units);
