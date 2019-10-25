@@ -16,7 +16,7 @@
 
 .upt-desc {
   margin: 20px 0 8px 10px;
-  width: 205px;
+  width: 218px;
   float: left;
 }
 
@@ -32,6 +32,10 @@
 .upt-desc input {
   float: right;
   width: 120px;
+}
+
+.upt-desc-spacer {
+  margin-bottom: 5px;
 }
 
 .upt-table {
