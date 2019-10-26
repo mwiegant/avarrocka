@@ -12,7 +12,10 @@ dndApp.controller('ManageUnitsController', ['$scope', function ($scope) {
   $scope.experienceOptions = [];
   $scope.equipmentOptions = [];
   $scope.unitTypeOptions = [];
-  $scope.size = null; // unsure if I need this...will keep for now
+
+  $scope.level = 0;
+  $scope.maxTroops = 0;
+  $scope.potentialTroops = 0;
 
   $scope.finalSums = [];
 
@@ -26,6 +29,7 @@ dndApp.controller('ManageUnitsController', ['$scope', function ($scope) {
     // display keywords & refresh the keywords / sums
     loadSelectedKeywords($scope.selectedUnit.Keywords);
     $scope.refreshKeywords();
+    $scope.calculateLevel();
   };
 
   $scope.refreshSums = function() {
@@ -82,6 +86,7 @@ dndApp.controller('ManageUnitsController', ['$scope', function ($scope) {
         MAN_PWR : 0,
         MAN_TGH : 0,
         MAN_MOR : 0,
+        Troops: 0,
         Alive: true
     };
 
@@ -160,6 +165,59 @@ dndApp.controller('ManageUnitsController', ['$scope', function ($scope) {
       _loadUnitsCallback(units);
     });
   };
+
+  // Determine what level the currently selected unit is, and how many troops are required for the next level
+  $scope.calculateLevel = function() {
+    const STRENGTH = 0;
+    const MIN_TROOPS = 1;
+    const MAX_TROOPS = 2;
+
+    let level = 1;
+    let strength = 4;
+    let minTroops = 0;
+    let maxTroops = 0;
+
+    for (level; level < 6; level++) {
+      strength = unitConstants.size[level][STRENGTH];
+      minTroops = unitConstants.size[level][MIN_TROOPS];
+      maxTroops = unitConstants.size[level][MAX_TROOPS];
+
+      if ($scope.selectedUnit.Troops >= minTroops && $scope.selectedUnit.Troops < maxTroops)
+        break;
+    }
+
+    // for some reason, didn't find the right level (there are only 5 levels)
+    if (level > 5) {
+      level = "?";
+      maxTroops = "?";
+    }
+    // assuming the level was determined, make sure the unit's strength is adjusted, if needed
+    else {
+      if ($scope.selectedUnit.MAX_STR != strength)
+        $scope.selectedUnit.MAX_STR = strength;
+
+      if ($scope.selectedUnit.STR > $scope.selectedUnit.MAX_STR)
+        $scope.selectedUnit.STR = $scope.selectedUnit.MAX_STR;
+    }
+
+    $scope.level = level;
+    $scope.maxTroops = maxTroops;
+  };
+
+  $scope.addTroops = function(){
+    appendTroops($scope.potentialTroops);
+  };
+
+  $scope.subtractTroops = function(){
+    appendTroops($scope.potentialTroops * -1);
+  };
+
+  function appendTroops(potentialTroops) {
+    $scope.selectedUnit.Troops += potentialTroops;
+    $scope.potentialTroops = 0;
+
+    $scope.calculateLevel();
+  }
 
   function isValidPortrait() {
     const keywords = $scope.selectedUnit.Keywords;

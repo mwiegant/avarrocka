@@ -11,11 +11,11 @@
 
 .upt-stats {
   margin: 20px 5px 0px 5px;
-  height: 180px;
+  height: 220px;
 }
 
 .upt-desc {
-  margin: 20px 0 8px 10px;
+  margin: 10px 0 8px 10px;
   width: 218px;
   float: left;
 }
@@ -29,13 +29,19 @@
   width: 120px;
 }
 
-.upt-desc input {
-  float: right;
-  width: 120px;
-}
+/* Unused? */
+/*.upt-desc input {*/
+/*  float: right;*/
+/*  width: 120px;*/
+/*}*/
 
 .upt-desc-spacer {
   margin-bottom: 5px;
+}
+
+.upt-troops {
+  display: inline-block;
+  width: 106px;
 }
 
 .upt-table {

@@ -42,6 +42,7 @@
       <div class="upt-stats">
         <!-- dynamically add options:
             https://memorynotfound.com/dynamically-add-remove-options-select-javascript/ -->
+        <hr>
         <div class="upt-desc">
           <div class="upt-desc-spacer">
             <label>Ancestry: </label>
@@ -73,11 +74,36 @@
               <option ng-if="selectedUnit.Keywords.Type === null" ng-selected="selected" value="">Select a unit type</option>
             </select>
             <br>
+          </div>
+
+          <hr>
+
+          <div class="upt-desc-spacer">
+            <div class="upt-troops">
+              <label>Troops: {{selectedUnit.Troops}}</label>
+            </div>
+            <div class="upt-troops">
+              <label>Level: {{level}} / 5</label>
+            </div>
             <br>
           </div>
 
-          <label>Troops: </label>
-          <input type="number" value="500" placeholder="1">
+          <div class="upt-desc-spacer">
+            <div class="upt-troops">
+              <label>Level up at:</label>
+            </div>
+            <div class="upt-troops">
+              <label>{{maxTroops}} troops</label>
+            </div>
+          </div>
+
+          <div class="upt-desc-spacer">
+            <div>
+              <button ng-click="subtractTroops()">lose troops</button>
+              <input type="text" ng-model="potentialTroops" size="5" maxlength="3">
+              <button ng-click="addTroops()">gain troops</button>
+            </div>
+          </div>
         </div>
 
 
@@ -131,7 +157,7 @@
             <th><input ng-model="finalSums[4]" readonly></th>
           </tr>
           <tr>
-            <th>Size:</th>
+            <th>Str:</th>
             <th><input ng-model="selectedUnit.STR"></th>
             <th>/</th>
             <th><input ng-model="selectedUnit.MAX_STR" readonly></th>

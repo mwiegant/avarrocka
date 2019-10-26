@@ -58,15 +58,14 @@ unitConstants.unitType = {
   Siege_Engine: [1, 1, 0, 1, 0, 1.50]
 };
 
-// todo -- update these constants to have the same format as the objects above
-unitConstants.size = [
+unitConstants.size = {
   // This is the only set of constants that do not follow the book verbatim,
   // although I do honor the written Size-to-CostModifier values
 
-  // key: Type, values: [Size, MinTroops, MaxTroops, CostModifier]
-  { key: "Squad", values: [4, 1, 20, 0.66] },
-  { key: "Company", values: [6, 21, 60, 1.00] },
-  { key: "Batallion", values: [8, 61, 100, 1.33] },
-  { key: "Division", values: [10, 101, 200, 1.66] },
-  { key: "Army", values: [12, 201, 400, 2.00] }
-];
+  // key: Level, values: [Strength, MinTroops, MaxTroops, CostModifier, LevelName]
+  1: [4, 0, 99, 0.66, "Squad"],
+  2: [6, 100, 399, 1.00, "Company"],
+  3: [8, 400, 999, 1.33, "Batallion"],
+  4: [10, 1000, 1999, 1.66, "Division"],
+  5: [12, 2000, 99999, 2.00, "Army"]
+};
