@@ -182,8 +182,9 @@
       <hr>
 
       <div class="upt-p">
-        <!-- add a log of unit activity -->
-        <p>Someday, a log of unit activity will be displayed here!</p>
+        <div ng-repeat="activity in selectedUnit.ActivityLog track by $index">
+          <p>{{activity}}</p>
+        </div>
       </div>
 
     </div>

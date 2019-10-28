@@ -1,5 +1,6 @@
 dndApp.controller('ManageUnitsController', ['$scope', function ($scope) {
 
+  const MAX_RECORDED_ACTIVITIES = 20;
   const UNKNOWN = "?";
   $scope.partyUnitsLoaded = null;
 
@@ -87,11 +88,13 @@ dndApp.controller('ManageUnitsController', ['$scope', function ($scope) {
         MAN_TGH : 0,
         MAN_MOR : 0,
         Troops: 0,
+        ActivityLog: [],
         Alive: true
     };
 
     loadSelectedKeywords($scope.selectedUnit.Keywords);
     $scope.refreshKeywords();
+    $scope.calculateLevel();
   };
 
   // saves the currently selected unit, using the boolean partyUnitsLoaded to determine which backend endpoint to call
@@ -206,10 +209,12 @@ dndApp.controller('ManageUnitsController', ['$scope', function ($scope) {
 
   $scope.addTroops = function(){
     appendTroops($scope.potentialTroops);
+    recordActivity(`${$scope.selectedUnit.Name} have gained troops! ${$scope.potentialTroops} have joined.`);
   };
 
   $scope.subtractTroops = function(){
     appendTroops($scope.potentialTroops * -1);
+    recordActivity(`${$scope.selectedUnit.Name} have lost troops. ${$scope.potentialTroops} have left this unit.`);
   };
 
   function appendTroops(potentialTroops) {
@@ -217,6 +222,13 @@ dndApp.controller('ManageUnitsController', ['$scope', function ($scope) {
     $scope.potentialTroops = 0;
 
     $scope.calculateLevel();
+  }
+
+  function recordActivity(activity) {
+    $scope.selectedUnit.ActivityLog.unshift(activity);
+
+    // limit the number of saved activities, so that the database object does not grow forever
+    $scope.selectedUnit.ActivityLog = $scope.selectedUnit.ActivityLog.slice(0, MAX_RECORDED_ACTIVITIES);
   }
 
   function isValidPortrait() {
