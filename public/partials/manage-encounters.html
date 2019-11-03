@@ -1,4 +1,4 @@
-<div class="main-col left-col-encounters">
+<div class="main-col left-col-man-encounters">
 
   <div ng-repeat="encounter in availableEncounters">
     <div class="card" ng-click="selectEncounter(encounter)">
@@ -15,7 +15,7 @@
 </div>
 
 
-<div class="main-col right-col-encounters">
+<div class="main-col right-col-man-encounters">
   <div ng-if="selectedEncounter !== null" class="vfill">
     <input type="text" ng-model="selectedEncounter.Name" placeholder="Name of this Encounter" class="upt-name" size="55">
 

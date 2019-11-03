@@ -20,7 +20,7 @@ p.property {
   padding-left: 5px;
 }
 
-div.card {
+.card {
   width: 400px;
   height: 150px;
   border: 2px solid black;
@@ -28,11 +28,11 @@ div.card {
   margin: 5px 0 10px 5px;
 }
 
-div.card p {
+.card p {
   margin: 8px 0 8px 5px;
 }
 
-div.card i {
+.card i {
   margin: 8px 0 8px 10px;
   font-size: 20px;
 }
@@ -44,12 +44,4 @@ div.stats-box {
 
 div.stats-box p {
   margin: 6px 0 6px 5px;
-}
-
-div.left {
-  float: left;
-}
-
-div.right {
-  float: right;
 }

@@ -33,33 +33,29 @@ input[type=number]::-webkit-outer-spin-button {
   width: 489px;
 }
 
-.right-col-manage {
-  float: right;
-  width: 571px;
-}
-
 .left-col-encounters {
   float: left;
-  width: 425px;
+  width: 375px;
 }
 
 .right-col-encounters {
   float: right;
+  width: 621px;
+}
+
+.right-col-man-units {
+  float: right;
   width: 571px;
 }
 
-.between-col {
-  display:inline-block;
-  border: 1px solid black;
-  /*width: 50px;*/
-  width: 8%;
-  /*height: 500px;*/
-  height: 100%;
+.left-col-man-encounters {
+  float: left;
+  width: 425px;
 }
 
-.move-btn {
-  width: 40px;
-  height: 40px;
+.right-col-man-encounters {
+  float: right;
+  width: 571px;
 }
 
 .nav-sidebar {
@@ -73,4 +69,12 @@ input[type=number]::-webkit-outer-spin-button {
   margin-bottom: 10px;
   margin-top: 10px;
   font-size: 18px;
+}
+
+div.left {
+  float: left;
+}
+
+div.right {
+  float: right;
 }
