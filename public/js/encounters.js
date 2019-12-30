@@ -97,7 +97,7 @@ dndApp.controller('EncountersController', ['$scope', function ($scope) {
       document.getElementById("fight-text").value = `${log}\n` + document.getElementById("fight-text").value;
     }
     else if (!$scope.inCombat && pendingLogs.length === 0) {
-      console.log("no more longs and no longer in combat: stopping the logger task");
+      console.log("no more logs and no longer in combat: stopping the logger task");
       stopLogging();
     }
   }
